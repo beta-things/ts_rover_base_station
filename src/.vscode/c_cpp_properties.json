@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/tch/ts_rover_base_station/install/robot_localization/include/**",
+        "/home/tch/ts_rover_base_station/install/neo_mpc_planner2/include/**",
+        "/home/tch/ts_rover_base_station/install/neo_srvs2/include/**",
+        "/home/tch/ts_rover_base_station/install/neo_localization2/include/**",
+        "/home/tch/ts_rover_base_station/install/neo_local_planner/include/**",
+        "/home/tch/ts_rover_base_station/install/neo_common2/include/**",
+        "/home/tch/ts_rover_base_station/install/nav2_straightline_planner/include/**",
+        "/home/tch/ts_rover_base_station/install/laser_filters/include/**",
+        "/opt/ros/humble/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

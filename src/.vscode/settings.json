@@ -1,0 +1,18 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/tch/ts_rover_base_station/install/robot_localization/local/lib/python3.10/dist-packages",
+        "/home/tch/ts_rover_base_station/install/neo_mpc_planner2/local/lib/python3.10/dist-packages",
+        "/home/tch/ts_rover_base_station/install/neo_srvs2/local/lib/python3.10/dist-packages",
+        "/home/tch/ts_rover_base_station/install/neo_nav2_py_costmap2D/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/tch/ts_rover_base_station/install/robot_localization/local/lib/python3.10/dist-packages",
+        "/home/tch/ts_rover_base_station/install/neo_mpc_planner2/local/lib/python3.10/dist-packages",
+        "/home/tch/ts_rover_base_station/install/neo_srvs2/local/lib/python3.10/dist-packages",
+        "/home/tch/ts_rover_base_station/install/neo_nav2_py_costmap2D/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}
