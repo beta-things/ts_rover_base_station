@@ -89,8 +89,7 @@ void StraightLine::configure(
 
   // Parameter initialization
   nav2_util::declare_parameter_if_not_declared(
-    node_, name_ + ".interpolation_resolution", rclcpp::ParameterValue(
-      0.1));
+    node_, name_ + ".interpolation_resolution", rclcpp::ParameterValue(0.01));
   node_->get_parameter(name_ + ".interpolation_resolution", interpolation_resolution_);
 }
 
@@ -152,7 +151,7 @@ nav_msgs::msg::Path StraightLine::createPlan(
   int total_number_of_loop = std::hypot(
     goal.pose.position.x - start.pose.position.x,
     goal.pose.position.y - start.pose.position.y) /
-    interpolation_resolution_;
+    0.07;
   double x_increment = (goal.pose.position.x - start.pose.position.x) / total_number_of_loop;
   double y_increment = (goal.pose.position.y - start.pose.position.y) / total_number_of_loop;
 

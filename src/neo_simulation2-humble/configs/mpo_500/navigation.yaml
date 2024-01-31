@@ -225,16 +225,16 @@ bt_navigator_rclcpp_node:
 
 # -----------------------------------------------------------------------NEO MPC
 
-#     goal_checker_plugins: ["goal_checker"]
-#     controller_plugins: ["FollowPath"]
-#     progress_checker:
-#       plugin: "nav2_controller::SimpleProgressChecker"
-#       required_movement_radius: 0.5
-#       movement_time_allowance: 10.0
-#     goal_checker:
-#       plugin: "nav2_controller::SimpleGoalChecker"
-#       xy_goal_tolerance: 0.05
-#       yaw_goal_tolerance: 0.05
+    goal_checker_plugins: ["goal_checker"]
+    controller_plugins: ["FollowPath"]
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.5
+      movement_time_allowance: 10.0
+    goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.05
 
 controller_server:
   ros__parameters:
@@ -250,15 +250,15 @@ controller_server:
       movement_time_allowance: 100.0
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.001
-      yaw_goal_tolerance: 0.01
+      xy_goal_tolerance: 0.01
+      yaw_goal_tolerance: 0.03
       stateful: True
     FollowPath:
       plugin: "neo_mpc_planner::NeoMpcPlanner"
-      lookahead_dist_min: 0.005
-      lookahead_dist_max: 0.22
-      lookahead_dist_close_to_goal: 0.010
-      control_steps: 3
+      lookahead_dist_min: 0.05
+      lookahead_dist_max: 0.1
+      lookahead_dist_close_to_goal: 0.05
+      control_steps: 2
 
 mpc_optimization_server:
   ros__parameters:
@@ -274,9 +274,9 @@ mpc_optimization_server:
     max_vel_trans: 0.15
     max_vel_theta: 2.0
     # Translation error weight 
-    w_trans: 0.98
+    w_trans: 0.82
     # Orientation error weight 
-    w_orient: 0.85
+    w_orient: 0.99
     # Control error weight 
     w_control: 0.05
     # Terminal weight 
@@ -287,13 +287,13 @@ mpc_optimization_server:
     w_costmap: 0.05
     # Waiting time before the robot can try a maneuver, after it had been stuck in the obstacle  
     waiting_time: 3.0
-    low_pass_gain: 0.30
+    low_pass_gain: 0.2
     # Optimization tolerance, smaller it is, slower the performance
-    opt_tolerance: 0.0001
+    opt_tolerance: 0.001
     # Time period, upto which MPC has to predict the control commands 
-    prediction_horizon: 2.50
+    prediction_horizon: 1.6
     # Number of steps that the prediction horizon needs to be splitted into
-    control_steps: 3
+    control_steps: 2
 
 # --------------------------------------------------------------------------Neo LOCAL
 # controller_server:
@@ -388,6 +388,17 @@ mpc_optimization_server:
 
 
 # -------------------------------------------------------------------------------MPPI
+#     goal_checker_plugins: ["goal_checker"]
+#     controller_plugins: ["FollowPath"]
+#     progress_checker:
+#       plugin: "nav2_controller::SimpleProgressChecker"
+#       required_movement_radius: 0.5
+#       movement_time_allowance: 10.0
+#     goal_checker:
+#       plugin: "nav2_controller::SimpleGoalChecker"
+#       xy_goal_tolerance: 0.05
+#       yaw_goal_tolerance: 0.05
+
 # controller_server:
 #   ros__parameters:
 #     controller_frequency: 30.0

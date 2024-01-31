@@ -27,7 +27,7 @@ from nav2_common.launch import RewrittenYaml
 def generate_launch_description():
     parameters =  LaunchConfiguration('params_file')
     map_file = LaunchConfiguration('map')
-    # namespace = LaunchConfiguration('namespace')
+    namespace = LaunchConfiguration('namespace')
     autostart = LaunchConfiguration('autostart', default='true')
     use_sim_time = LaunchConfiguration('use_sim_time')    
     lifecycle_nodes = ['map_server']
