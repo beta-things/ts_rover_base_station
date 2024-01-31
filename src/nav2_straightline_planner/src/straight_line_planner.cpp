@@ -151,7 +151,7 @@ nav_msgs::msg::Path StraightLine::createPlan(
   int total_number_of_loop = std::hypot(
     goal.pose.position.x - start.pose.position.x,
     goal.pose.position.y - start.pose.position.y) /
-    0.07;
+    0.04;
   double x_increment = (goal.pose.position.x - start.pose.position.x) / total_number_of_loop;
   double y_increment = (goal.pose.position.y - start.pose.position.y) / total_number_of_loop;
 
