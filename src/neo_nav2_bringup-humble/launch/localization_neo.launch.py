@@ -93,6 +93,6 @@ def generate_launch_description():
 
     # Declare the launch options
     ld.add_action(load_nodes)
-    ld.add_action(load_nodes_multi_robot)
+    # ld.add_action(load_nodes_multi_robot)
 
     return ld

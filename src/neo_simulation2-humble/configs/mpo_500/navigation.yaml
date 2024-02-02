@@ -250,29 +250,29 @@ controller_server:
       movement_time_allowance: 100.0
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.01
+      xy_goal_tolerance: 0.015
       yaw_goal_tolerance: 0.03
       stateful: True
     FollowPath:
       plugin: "neo_mpc_planner::NeoMpcPlanner"
-      lookahead_dist_min: 0.05
+      lookahead_dist_min: 0.01
       lookahead_dist_max: 0.1
-      lookahead_dist_close_to_goal: 0.08
-      control_steps: 2
+      lookahead_dist_close_to_goal: 0.01
+      control_steps: 3
 
 mpc_optimization_server:
   ros__parameters:
     acc_x_limit: 0.1
     acc_y_limit: 0.1
-    acc_theta_limit: 1.5
+    acc_theta_limit: 0.50
     min_vel_x: -0.15
     min_vel_y: -0.15
     min_vel_trans: -0.15
-    min_vel_theta: -2.0
+    min_vel_theta: -0.5
     max_vel_x: 0.15
     max_vel_y: 0.15
     max_vel_trans: 0.15
-    max_vel_theta: 2.0
+    max_vel_theta: 0.5
     # Translation error weight 
     w_trans: 0.82
     # Orientation error weight 
@@ -287,7 +287,7 @@ mpc_optimization_server:
     w_costmap: 0.05
     # Waiting time before the robot can try a maneuver, after it had been stuck in the obstacle  
     waiting_time: 3.0
-    low_pass_gain: 0.1
+    low_pass_gain: 0.100
     # Optimization tolerance, smaller it is, slower the performance
     opt_tolerance: 0.001
     # Time period, upto which MPC has to predict the control commands 
@@ -552,9 +552,9 @@ local_costmap:
       footprint:  "[ [0.50,0.4],[-0.50,0.4],[-0.50,-0.4],[0.50,-0.4] ]"
       use_sim_time: False
       rolling_window: true
-      width: 5
-      height: 5
-      resolution: 0.03
+      width: 2
+      height: 2
+      resolution: 0.05
       plugins: ["obstacle_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -675,26 +675,26 @@ map_saver:
 
 ###// NAVFN//
 
-# planner_server:
-#   ros__parameters:
-#     expected_planner_frequency: 5.0
-#     use_sim_time: True
-#     planner_plugins: ["GridBased"]
-#     GridBased:
-#       plugin: "nav2_navfn_planner/NavfnPlanner"
-#       tolerance: 0.5
-#       use_astar: false
-#       allow_unknown: true
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 5.0
+    use_sim_time: True
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner/NavfnPlanner"
+      tolerance: 0.5
+      use_astar: false
+      allow_unknown: true
 
 ###// STRAIGHTLINE//
 
-planner_server:
-  ros__parameters:
-    plugins: ["GridBased"]
-    use_sim_time: False
-    GridBased:
-      plugin: "nav2_straightline_planner/StraightLine"
-      interpolation_resolution: 0.1
+# planner_server:
+#   ros__parameters:
+#     plugins: ["GridBased"]
+#     use_sim_time: False
+#     GridBased:
+#       plugin: "nav2_straightline_planner/StraightLine"
+#       interpolation_resolution: 0.1
 
 
 
