@@ -1,0 +1,29 @@
+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
+
+
+ros2 launch neo_mpo_500-2 bringup.launch.py
+
+ros2 launch libsurvive_ros2 libsurvive_ros2.launch.py rosbridge:=true
+
+
+ros2 launch neo_nav2_bringup localization_neo.launch.py  map:="/home/tch/miz_room_map.yaml" use_sim_time:=false  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation.yaml"
+
+ros2 launch neo_nav2_bringup localization_neo.launch.py  map:="/home/ts-rover/ts_rover_base_station/src/miz_room_map.yaml" use_sim_time:=false  params_file:="/home/ts-rover/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation.yaml"
+
+
+
+ros2 run neo_mpc_planner2 mpc_optimization_server.py --ros-args --params-file /home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation.yaml
+
+ros2 run neo_mpc_planner2 mpc_optimization_server.py --ros-args --params-file /home/ts-rover/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation.yaml
+
+
+
+ros2 launch neo_nav2_bringup navigation_neo.launch.py params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation.yaml"
+
+ros2 launch neo_nav2_bringup navigation_neo.launch.py params_file:="/home/ts-rover/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation.yaml"
+
+ros2 launch robot_localization ekf_lib_survive.launch.py 
+
+ros2 launch robot_localization ekf.launch.py
+
+ros2 launch neo_nav2_bringup rviz_launch.py 
