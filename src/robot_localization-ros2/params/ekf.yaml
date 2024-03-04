@@ -176,8 +176,8 @@ ekf_filter_node:
         imu0_relative: true
         imu0_queue_size: 5
         # imu0_pose_rejection_threshold: 0.4                # Note the difference in parameter names
-        imu0_twist_rejection_threshold: 0.5               #
-        imu0_linear_acceleration_rejection_threshold: 0.5 #
+        imu0_twist_rejection_threshold: 0.8               #
+        imu0_linear_acceleration_rejection_threshold: 0.8 #
 
         # [ADVANCED] Some IMUs automatically remove acceleration due to gravity, and others don't. If yours doesn't, please set
         # this to true, and *make sure* your data conforms to REP-103, specifically, that the data is in ENU frame.
@@ -208,10 +208,10 @@ ekf_filter_node:
         control_config: [true, true, false, false, false, true]
 
         # Places limits on how large the acceleration term will be. Should match your robot's kinematics.
-        acceleration_limits: [1.3, 1.3, 0.0, 0.0, 0.0, 1.5]
+        acceleration_limits: [0.15, 0.15, 0.0, 0.0, 0.0, 0.5]
 
         # Acceleration and deceleration limits are not always the same for robots.
-        deceleration_limits: [1.3, 1.3, 0.0, 0.0, 0.0, 1.5]
+        deceleration_limits: [0.15, 0.15, 0.0, 0.0, 0.0, 0.5]
 
         # If your robot cannot instantaneously reach its acceleration limit, the permitted change can be controlled with these
         # gains
