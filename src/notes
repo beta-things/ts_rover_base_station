@@ -1,0 +1,23 @@
+TODO SOFTWARE
+- a* or NavFN implementation with orientation filter to keep wires behind the unit
+- API for shot calling
+- Joystick operation  
+
+
+TODO HARDWARE
+- Planetary gear motors with OMNI wheels
+- Modern CPU onboard
+- LIDar control board and CAN bus board in one? 
+- e-stop buttons 
+
+
+-This past couple weeks I've been working to get all the control software running on the SBC but it's not capable. Even with 50% CPU usage any dropped frames 
+on the part of the position solver or the local path planner make for large insurmountable nav issues. Currently ethernet wired with the majority of software running on the 
+TCH. Will need to run better compute on the final as the control should not be network dependent for safety reasons. 
+
+-Coming up is more work on making setup easier and faster * then probable API for Kyle to hook into for shot calling and then joystick control. 
+*-Room scanning with VR tracking instead of AMCL 
+-rotational trimming of tracker and LIDAR using a calibration sequence
+-Simple api for shot calling only. more complex movements will require an edited version of RVIZ
+-Joystick control that still respects operating envelope and collision detection
+-Add AMCl tracking to the sensor fusion for still better accuracy
