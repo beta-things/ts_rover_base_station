@@ -1,29 +1,4 @@
-TODO SOFTWARE
-- a* or NavFN implementation with orientation filter to keep wires behind the unit
-- API for shot calling
-- Joystick operation  
-
-
-TODO HARDWARE
-- Planetary gear motors with OMNI wheels
-- Modern CPU onboard
-- LIDar control board and CAN bus board in one? 
-- e-stop buttons 
-
-
--This past couple weeks I've been working to get all the control software running on the SBC but it's not capable. Even with 50% CPU usage any dropped frames 
-on the part of the position solver or the local path planner make for large insurmountable nav issues. Currently ethernet wired with the majority of software running on the 
-TCH. Will need to run better compute on the final as the control should not be network dependent for safety reasons. 
-
--Coming up is more work on making setup easier and faster * then probable API for Kyle to hook into for shot calling and then joystick control. 
-*-Room scanning with VR tracking instead of AMCL 
--rotational trimming of tracker and LIDAR using a calibration sequence
--Simple api for shot calling only. more complex movements will require an edited version of RVIZ
--Joystick control that still respects operating envelope and collision detection
--Add AMCl tracking to the sensor fusion for still better accuracy
-
-
-Installation from scratch
+INSTALLATION FROM SCRATCH 
 
 //ros2 install 
 https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
@@ -46,7 +21,7 @@ export MY_ROBOT=mpo_500
 export MAP_NAME=aws.yaml
 
 //build 
-//go to root folder
+//go to cloned repo's root folder
 colcon build
 
 //install gazebo for sims NOTE GAZEBO MAY CRASH OR TAKE FOREVER TO LOAD FIRST TRY> JUST WAIT
@@ -55,16 +30,17 @@ sudo apt install ros-humble-gazebo-ros-pkgs
 //SIMULATION RUNN STUFF
 ros2 launch neo_simulation2 simulation.launch.py
 
-ros2 launch neo_nav2_bringup localization_amcl.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
+ros2 launch neo_nav2_bringup localization_simple.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
 
-//VISCA CONTROLLER 
+//VISCA CONTROLLER if used
 ros2 run visca_controller cmd_vel_publisher
+//or keyboard teleop
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
+//start nav2 with straightline planner
+ros2 launch neo_nav2_bringup navigation_neo.launch.py params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
 
-ros2 launch neo_simulation2 simulation.launch.py
-
-ros2 launch neo_nav2_bringup localization_amcl.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
-
+//START RVIZ
 ros2 launch neo_nav2_bringup rviz_launch.py
 
-ros2 launch neo_nav2_bringup navigation_neo.launch.py params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
+
