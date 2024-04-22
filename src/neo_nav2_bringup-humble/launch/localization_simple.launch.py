@@ -30,7 +30,7 @@ def generate_launch_description():
     # namespace = LaunchConfiguration('namespace')
     autostart = LaunchConfiguration('autostart', default='true')
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')    
-    lifecycle_nodes = ['map_server', 'amcl','velocity_smoother']
+    lifecycle_nodes = ['map_server', 'velocity_smoother']
     lifecycle_nodes_multi_robots = ['amcl']
     use_multi_robots = LaunchConfiguration('use_multi_robots', default='False')
 
@@ -73,6 +73,13 @@ def generate_launch_description():
             output='screen',
             parameters=[configured_params],
             remappings=remappings),
+
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='lock_map_odom',
+            arguments=['0', '0', '0', '0', '0', '0', '1','map', 'odom'],
+            output='screen'),
 
         Node(
             package='nav2_lifecycle_manager',

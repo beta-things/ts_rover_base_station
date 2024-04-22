@@ -5,7 +5,7 @@
 <!-- =================================================================================== -->
 <robot name="mpo_500">
   <!-- Lidar sensors -->
-  <gazebo reference="lidar_1_link">
+  <!-- <gazebo reference="lidar_1_link">
     <sensor name="lidar_1_sensor" type="ray">
       <always_on>true</always_on>
       <pose>0 0 0 0 0 0</pose>
@@ -27,20 +27,14 @@
         </range>
         <noise>
           <type>gaussian</type>
-          <!-- Noise parameters based on published spec for Hokuyo laser
-                   achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-                   stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-                   reading. -->
           <mean>0.0</mean>
           <stddev>0.01</stddev>
         </noise>
       </ray>
       <plugin filename="libgazebo_ros_ray_sensor.so" name="lidar_1">
       <ros>
-        <!-- <namespace>   </namespace> -->
         <argument>~/out:=scan</argument>
       </ros>
-      <!-- Set output to sensor_msgs/LaserScan to get same output type as gazebo_ros_laser -->
       <output_type>sensor_msgs/LaserScan</output_type>
       <frame_name>lidar_1_link</frame_name>
       </plugin>
@@ -68,29 +62,24 @@
         </range>
         <noise>
           <type>gaussian</type>
-          <!-- Noise parameters based on published spec for Hokuyo laser
-                   achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-                   stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-                   reading. -->
           <mean>0.0</mean>
           <stddev>0.01</stddev>
         </noise>
       </ray>
       <plugin filename="libgazebo_ros_ray_sensor.so" name="lidar_2">
        <ros>
-        <!-- <namespace> </namespace> -->
         <argument>~/out:=scan2</argument>
       </ros>
-      <!-- Set output to sensor_msgs/LaserScan to get same output type as gazebo_ros_laser -->
       <output_type>sensor_msgs/LaserScan</output_type>
       <frame_name>lidar_2_link</frame_name>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
+  
   <gazebo>
     <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
        
-      <commandTopic>cmd_vel</commandTopic>
+      <commandTopic>cmd_vel_smoothed</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <robotNamespace><remapping>/tf:=tf</remapping>  </robotNamespace>
       <ros>    <remapping>/tf:=tf</remapping>    </ros>

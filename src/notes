@@ -21,3 +21,50 @@ TCH. Will need to run better compute on the final as the control should not be n
 -Simple api for shot calling only. more complex movements will require an edited version of RVIZ
 -Joystick control that still respects operating envelope and collision detection
 -Add AMCl tracking to the sensor fusion for still better accuracy
+
+
+Installation from scratch
+
+//ros2 install 
+https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+
+//install nav2
+https://navigation.ros.org/getting_started/index.html
+
+//filters required for laser filter module 
+sudo apt install ros-humble-filters
+
+//geographic messages and geographic lib required for sensor fusion (robot localization)
+sudo apt install ros-humble-geographic-msgs
+sudo apt install libgeographic-dev
+
+//get repo
+git clone https://github.com/beta-things/ts_rover_base_station.git 
+
+//eport var for simulation
+export MY_ROBOT=mpo_500
+export MAP_NAME=aws.yaml
+
+//build 
+//go to root folder
+colcon build
+
+//install gazebo for sims NOTE GAZEBO MAY CRASH OR TAKE FOREVER TO LOAD FIRST TRY> JUST WAIT
+sudo apt install ros-humble-gazebo-ros-pkgs
+
+//SIMULATION RUNN STUFF
+ros2 launch neo_simulation2 simulation.launch.py
+
+ros2 launch neo_nav2_bringup localization_amcl.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
+
+//VISCA CONTROLLER 
+ros2 run visca_controller cmd_vel_publisher
+
+
+ros2 launch neo_simulation2 simulation.launch.py
+
+ros2 launch neo_nav2_bringup localization_amcl.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
+
+ros2 launch neo_nav2_bringup rviz_launch.py
+
+ros2 launch neo_nav2_bringup navigation_neo.launch.py params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"

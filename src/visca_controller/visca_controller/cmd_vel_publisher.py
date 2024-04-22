@@ -45,12 +45,12 @@ class CmdVelPublisher(Node):
 
         self.xDir_percentage_multiplier = 1/24  #24 to -24
         self.xSpeed_percentage = 0 #used as multiplier (can be negative)
-        self.xSpeed_max = 1.5 #meters/sec
+        self.xSpeed_max = 3 #1.5 irl meters/sec
         self.xSpeed_twist = 0 #stateful output for ROS2 twist commands
 
         self.yDir_percentage_multiplier = 1/24 #24 to -24
         self.ySpeed_percentage = 0 #used as multiplier (can be negative)
-        self.ySpeed_max = 1.5 #meters/sec
+        self.ySpeed_max = 3 #1.5irl meters/sec
         self.ySpeed_twist = 0 #stateful output for ROS2 twist commands
 
         self.zRot_percentage_multiplier = 1/7  #7 to -7

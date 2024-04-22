@@ -27,11 +27,10 @@ from nav2_common.launch import RewrittenYaml
 def generate_launch_description():
     parameters =  LaunchConfiguration('params_file')
     map_file = LaunchConfiguration('map')
-    # namespace = LaunchConfiguration('namespace')
+    namespace = LaunchConfiguration('namespace')
     autostart = LaunchConfiguration('autostart', default='true')
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')    
-    lifecycle_nodes = ['map_server', 'amcl','velocity_smoother']
-    lifecycle_nodes_multi_robots = ['amcl']
+    use_sim_time = LaunchConfiguration('use_sim_time')    
+    lifecycle_nodes = ['map_server']
     use_multi_robots = LaunchConfiguration('use_multi_robots', default='False')
 
     remappings = [('/tf', 'tf'),
@@ -46,7 +45,7 @@ def generate_launch_description():
         # root_key=namespace,
         param_rewrites=param_substitutions,
         convert_types=True)
-
+    
     load_nodes = GroupAction(
         condition=IfCondition(PythonExpression(['not ', use_multi_robots])),
         actions=[
@@ -59,20 +58,12 @@ def generate_launch_description():
             remappings=remappings),
 
         Node(
-            package='nav2_amcl',
-            executable='amcl',
-            name='amcl',
+            package='neo_localization2', 
+            executable='neo_localization_node', 
             output='screen',
-            parameters=[configured_params],
-            remappings=remappings),
-
-        Node(
-            package='nav2_velocity_smoother',
-            executable='velocity_smoother',
-            name='velocity_smoother',
-            output='screen',
-            parameters=[configured_params],
-            remappings=remappings),
+            name='neo_localization2_node', 
+            parameters= [configured_params],
+            remappings= remappings),
 
         Node(
             package='nav2_lifecycle_manager',
@@ -89,19 +80,11 @@ def generate_launch_description():
         condition=IfCondition(use_multi_robots),
         actions=[
         Node(
-            package='nav2_amcl',
-            executable='amcl',
-            name='amcl',
+            package='neo_localization2', 
+            executable='neo_localization_node', 
             output='screen',
-            parameters=[configured_params]),
-        Node(
-            package='nav2_lifecycle_manager',
-            executable='lifecycle_manager',
-            name='lifecycle_manager_localization',
-            output='screen',
-            parameters=[{'use_sim_time': use_sim_time},
-                        {'autostart': autostart},
-                        {'node_names': lifecycle_nodes_multi_robots}])
+            name='neo_localization2_node', 
+            parameters= [configured_params]),
         ]
     )
 
@@ -111,5 +94,5 @@ def generate_launch_description():
     # Declare the launch options
     ld.add_action(load_nodes)
     # ld.add_action(load_nodes_multi_robot)
-    
+
     return ld

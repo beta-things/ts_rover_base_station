@@ -1,6 +1,3 @@
-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
-
-
 ros2 launch neo_mpo_500-2 bringup.launch.py
 
 ros2 launch libsurvive_ros2 libsurvive_ros2.launch.py rosbridge:=true
