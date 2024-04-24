@@ -18,7 +18,7 @@ git clone https://github.com/beta-things/ts_rover_base_station.git
 
 //eport var for simulation
 export MY_ROBOT=mpo_500
-export MAP_NAME=aws.yaml
+export MAP_NAME=neo_track1
 
 //build 
 //go to cloned repo's root folder
@@ -31,6 +31,9 @@ sudo apt install ros-humble-gazebo-ros-pkgs
 
 //SIMULATION RUNN STUFF
 ros2 launch neo_simulation2 simulation.launch.py
+//or with lidar
+ros2 launch neo_simulation2 simulation_lidar.launch.py
+
 
 ros2 launch neo_nav2_bringup localization_simple.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
 

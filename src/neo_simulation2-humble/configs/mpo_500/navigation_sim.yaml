@@ -290,16 +290,16 @@ mpc_optimization_server:
     # Footprint weight 
     w_footprint: 1
     # Costmap weight 
-    w_costmap: 0.05
+    w_costmap: 100.0
     # Waiting time before the robot can try a maneuver, after it had been stuck in the obstacle  
     waiting_time: 3.0
     low_pass_gain: 0.100
     # Optimization tolerance, smaller it is, slower the performance
     opt_tolerance: 0.001
     # Time period, upto which MPC has to predict the control commands 
-    prediction_horizon: 1.2
+    prediction_horizon: 2.2
     # Number of steps that the prediction horizon needs to be splitted into
-    control_steps: 2
+    control_steps: 3
 
 # --------------------------------------------------------------------------Neo LOCAL
 # controller_server:
@@ -535,18 +535,19 @@ local_costmap:
       global_frame: map
       robot_base_frame: base_link
       footprint_padding: 0.1
-      trinary_costmap: true
+      # trinary_costmap: true
       footprint:  "[ [0.2,0.2],[-0.2,0.2],[-0.2,-0.2],[0.2,-0.2] ]"
       use_sim_time: true
       rolling_window: true
-      width: 4
-      height: 4
+      width: 5
+      height: 5
       resolution: 0.05
       plugins: ["obstacle_layer", "inflation_layer"]
       inflation_layer:
+        enabled: True
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 100.0
-        inflation_radius: 2.0
+        cost_scaling_factor: 1.0
+        inflation_radius: 1.1
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -607,8 +608,8 @@ global_costmap:
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 5.0
-        inflation_radius: 0.5
+        cost_scaling_factor: 1.0
+        inflation_radius: 1.2
       always_send_full_costmap: True
 
 map_server:

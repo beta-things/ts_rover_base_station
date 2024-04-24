@@ -331,11 +331,12 @@ class MpcOptimizationServer(Node):
 			q = self.quaternion_from_euler(0, 0, odom_yaw)
 			mx1, my1 = self.costmap_ros.getWorldToMap(pos_x, pos_y)
 			col = self.costmap_ros.getCost(mx1, my1)
+			print(col)
 			pose.pose.orientation.w = q[0]
 			pose.pose.orientation.x = q[1]
 			pose.pose.orientation.y = q[2]
 			pose.pose.orientation.z = q[3]
-			if (col >= 0.99):
+			if (col >= 0.001):
 				self.collision = True
 				print("Collision ahead, stopping the robot")
 				break
