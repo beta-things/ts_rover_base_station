@@ -7,7 +7,7 @@ class Costmap2d():
 	def __init__(self, ros_object):
 		self.subscription = ros_object.create_subscription(
             OccupancyGrid,
-            '/local_costmap/costmap',
+            '/global_costmap/costmap',
             self.costmap_callback,
             10)
 		self.subscription  # prevent unused variable warning.

@@ -261,10 +261,10 @@ controller_server:
       stateful: True
     FollowPath:
       plugin: "neo_mpc_planner::NeoMpcPlanner"
-      lookahead_dist_min: 0.01
+      lookahead_dist_min: 0.03
       lookahead_dist_max: 0.1
-      lookahead_dist_close_to_goal: 0.01
-      control_steps: 3
+      lookahead_dist_close_to_goal: 0.03
+      control_steps: 2
 
 mpc_optimization_server:
   ros__parameters:
@@ -295,11 +295,11 @@ mpc_optimization_server:
     waiting_time: 3.0
     low_pass_gain: 0.100
     # Optimization tolerance, smaller it is, slower the performance
-    opt_tolerance: 0.001
+    opt_tolerance: 0.01
     # Time period, upto which MPC has to predict the control commands 
-    prediction_horizon: 2.2
+    prediction_horizon: 1.4
     # Number of steps that the prediction horizon needs to be splitted into
-    control_steps: 3
+    control_steps: 2
 
 # --------------------------------------------------------------------------Neo LOCAL
 # controller_server:
@@ -527,54 +527,54 @@ controller_server_rclcpp_node:
   ros__parameters:
     use_sim_time: true
 
-local_costmap:
-  local_costmap:
-    ros__parameters:
-      update_frequency: 10.0
-      publish_frequency: 10.0
-      global_frame: map
-      robot_base_frame: base_link
-      footprint_padding: 0.1
-      # trinary_costmap: true
-      footprint:  "[ [0.2,0.2],[-0.2,0.2],[-0.2,-0.2],[0.2,-0.2] ]"
-      use_sim_time: true
-      rolling_window: true
-      width: 5
-      height: 5
-      resolution: 0.05
-      plugins: ["obstacle_layer", "inflation_layer"]
-      inflation_layer:
-        enabled: True
-        plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 1.0
-        inflation_radius: 1.1
-      obstacle_layer:
-        plugin: "nav2_costmap_2d::ObstacleLayer"
-        enabled: True
-        observation_sources: scan scan1
-        scan:
-          topic: /scan
-          max_obstacle_height: 2.0
-          raytrace_max_range: 8.0
-          obstacle_max_range: 5.0
-          clearing: True
-          marking: True
-          data_type: "LaserScan"
-        scan1:
-          topic: /scan2
-          max_obstacle_height: 2.0
-          raytrace_max_range: 8.0
-          obstacle_max_range: 5.0
-          clearing: True
-          marking: True
-          data_type: "LaserScan"
-      always_send_full_costmap: True
+# local_costmap:
+#   local_costmap:
+#     ros__parameters:
+#       update_frequency: 10.0
+#       publish_frequency: 10.0
+#       global_frame: map
+#       robot_base_frame: base_link
+#       footprint_padding: 0.1
+#       # trinary_costmap: true
+#       footprint:  "[ [0.2,0.2],[-0.2,0.2],[-0.2,-0.2],[0.2,-0.2] ]"
+#       use_sim_time: true
+#       rolling_window: true
+#       width: 5
+#       height: 5
+#       resolution: 0.05
+#       plugins: ["obstacle_layer", "inflation_layer"]
+#       inflation_layer:
+#         enabled: True
+#         plugin: "nav2_costmap_2d::InflationLayer"
+#         cost_scaling_factor: 1.0
+#         inflation_radius: 1.25
+#       obstacle_layer:
+#         plugin: "nav2_costmap_2d::ObstacleLayer"
+#         enabled: True
+#         observation_sources: scan scan1
+#         scan:
+#           topic: /scan
+#           max_obstacle_height: 2.0
+#           raytrace_max_range: 80.0
+#           obstacle_max_range: 50.0
+#           clearing: True
+#           marking: True
+#           data_type: "LaserScan"
+#         scan1:
+#           topic: /scan2
+#           max_obstacle_height: 2.0
+#           raytrace_max_range: 80.0
+#           obstacle_max_range: 50.0
+#           clearing: True
+#           marking: True
+#           data_type: "LaserScan"
+#       always_send_full_costmap: True
 
 global_costmap:
   global_costmap:
     ros__parameters:
-      update_frequency: 1.0
-      publish_frequency: 1.0
+      update_frequency: 10.0
+      publish_frequency: 10.0
       global_frame: map
       robot_base_frame: base_link
       footprint_padding: 0.0
@@ -586,6 +586,7 @@ global_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
+        footprint_clearing_enabled: False
         observation_sources: scan scan1
         scan:
           topic: /scan
@@ -609,7 +610,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 1.0
-        inflation_radius: 1.2
+        inflation_radius: 1.25
       always_send_full_costmap: True
 
 map_server:

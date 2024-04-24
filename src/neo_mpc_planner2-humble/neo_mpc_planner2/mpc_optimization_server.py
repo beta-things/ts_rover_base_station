@@ -341,7 +341,7 @@ class MpcOptimizationServer(Node):
 				print("Collision ahead, stopping the robot")
 				break
 
-		if (self.costmap_ros.getFootprintCost(footprint) == 1.0):
+		if (self.costmap_ros.getFootprintCost(footprint) >= 0.001):
 			self.collision_footprint = True
 			print("Footprint in collision, stopping the robot")
 		else:
@@ -376,11 +376,11 @@ class MpcOptimizationServer(Node):
 			response.output_vel.twist.linear.x = 0.0
 			response.output_vel.twist.linear.y = 0.0
 			response.output_vel.twist.angular.z = 0.0
-			self.waiting_time += delta_t
-			# After waiting for 3 seconds for the obstacle to clear, the robot proceeds further in the next service call.
-			if (self.waiting_time >= 3.0):
-				self.collision = False
-				self.waiting_time = 0.0
+			# self.waiting_time += delta_t
+			# # After waiting for 3 seconds for the obstacle to clear, the robot proceeds further in the next service call.
+			# if (self.waiting_time >= 3.0):
+			# 	self.collision = False
+			# 	self.waiting_time = 0.0
 		else:
 			# avoiding sudden jerks and inertia
 			temp_x = np.fmin(x.x[0], self.last_control[0] + self.acc_x_limit * self.control_interval)
