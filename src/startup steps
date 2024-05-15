@@ -23,4 +23,31 @@ ros2 launch robot_localization ekf_lib_survive.launch.py
 
 ros2 launch robot_localization ekf.launch.py
 
-ros2 launch neo_nav2_bringup rviz_launch.py 
+ros2 launch neo_nav2_bringup rviz_launch.py   
+
+
+//SIMULATION STEPS
+
+ros2 launch neo_simulation2 simulation.launch.py
+//or with lidar
+ros2 launch neo_simulation2 simulation_lidar.launch.py
+
+
+ros2 launch neo_nav2_bringup localization_simple.launch.py map:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/maps/neo_track1.yaml" use_sim_time:=true  params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
+
+//VISCA CONTROLLER if used
+ros2 run visca_controller cmd_vel_publisher
+
+//or keyboard teleop
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+//start nav2 with straightline planner
+ros2 launch neo_nav2_bringup navigation_neo.launch.py params_file:="/home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml"
+
+//start MPC server 
+ros2 run neo_mpc_planner2 mpc_optimization_server.py --ros-args --params-file /home/tch/ts_rover_base_station/src/neo_simulation2-humble/configs/mpo_500/navigation_sim.yaml
+
+
+//START RVIZ
+ros2 launch neo_nav2_bringup rviz_launch.py
+

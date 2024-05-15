@@ -1,0 +1,33 @@
+INTRO
+
+This is a series of packages that work together to run the rover and simulations. Below, I will lay out how these packages work together in various circumstances. Note that most if not all packages should be run on the robot's onboard computer, but due to bandwidth issues on the current Late Panda SBC, some packages like the MPC optimizer should be run on a seperate machine but please ensure they have a physical (cat5) connection or you will see unexpected behaviours. 
+
+ROOM INSTALLATION
+
+You will need to set up the VR base stations in order for the absolute localization to work. Please follow the instructions provided by HTC VIVE https://www.vive.com/ca/support/vive/category_howto/installing-the-base-stations.html
+
+AUTONOMOUS NAVIGATION BASED ON WAYPOINT REQUESTS
+
+1) neo_mpo_500-2 bringup.launch.py must run on the robot's onboard computer and is responsible for starting up the following:
+    -Motor Controller (odrive_motor_op package) which  sets up the odrive controllers and allows for rotational velocity control of the wheels. It also broadcasts wheel odometry (via drives/joint_states) for use in the kinematics package and later in sensor fusion for localization.
+    -Kinematics / inverse Kinematics (kinematics.launch.py) which provides odometry (relative positioning) based on wheel odometry from the motor controller. It also takes robot twist commands and generates wheel velocity commands used by motor controller
+    -Lidar and lidar filter modules:
+        -lidar (rplidar_a1_launch.py) interfaces with the USB lidar module and outputs raw lidar data
+        -lidar filter (box_filter_example.launch.py) intakes raw lidar info and outputs the same data but with points that are inside the robot footprint removed. This data will be used later by NAV2 for obstacle detection, room scanning, and potentially AMCL for further positioning accuracy.
+
+2) libsurvive_ros2 libsurvive_ros2.launch.py also must run on the robot's onboard computer. It is responsible for providing absolute positioning data. This data is used by sensor fusion (robot_localization-ros2) in conjunction with odometry and the IMU data to give the most accurate positioning possible.
+
+3) neo_nav2_bringup localization_neo.launch.py provides the map info later used in NAV2 and RVIZ2 or our custom web viewer. 
+
+4) neo_mpc_planner2 mpc_optimization_server.py is the heart of the omnidirectional drive system. It generates the robots 'local' path as it makes efforts to stay on the 'global' path provided by the straightline planner or others. Due to limitations of the robot's onboard computer, at this time it is recomended to run this on a seperate machine that is physically networked with the robot's computer, though ideally the oboard PC would have the horsepower to run it. 
+
+5) neo_nav2_bringup navigation_neo.launch.py initializes and manages the nav2 packages that control the robot's high level navigation efforts. It takes control effort commands from RVIZ or our custom web visualizer.
+
+6) The robot localization scripts use an Extended Kalaman Filter to fuse various localization sources into one based on how much we trust each source for things like accelleration, absolute movements, ect. 
+    -robot_localization ekf.launch.py fuses the odometry with the IMU for relative positioning close to real time.
+    -neo_nav2_bringup rviz_launch.py uses the VR tracking data (libsurvive_ros2.launch.py) to offset the odometry frame based on more periodic absolute positioning data.
+
+
+MANUAL CONTROL VIA VISCA CONTROLLER
+
+This can be achieved simply enough by starting up the neo_mpo_500-2 bringup.launch.py  and the visca_controller cmd_vel_publisher for line of sight control of the robot. You cal use visca controller with all the above scripts running also, but to avoid conflicting commands, make sure there is no active nav2 command running during manual control. Currently there is no collision check for manual control. 

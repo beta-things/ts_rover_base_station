@@ -1,0 +1,32 @@
+INSTALLATION FROM SCRATCH 
+
+//ros2 install 
+https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+
+//install nav2
+https://navigation.ros.org/getting_started/index.html
+
+//filters required for laser filter module 
+sudo apt install ros-humble-filters
+
+//geographic messages and geographic lib required for sensor fusion (robot localization)
+sudo apt install ros-humble-geographic-msgs
+sudo apt install libgeographic-dev
+
+//get repo
+git clone https://github.com/beta-things/ts_rover_base_station.git 
+
+//eport var for simulation
+export MY_ROBOT=mpo_500
+export MAP_NAME=neo_track1
+
+//build 
+//go to cloned repo's root folder
+colcon build
+
+//install gazebo for sims NOTE GAZEBO MAY CRASH OR TAKE FOREVER TO LOAD FIRST TRY> JUST WAIT
+sudo apt install ros-humble-gazebo-ros-pkgs
+
+
+
+
